@@ -170,3 +170,6 @@ http://localhost:5000/api-docs to interact with and test the endpoints.
 This setup provides clear API documentation for interacting with your Herbal Remedy Web App.
 Each endpoint is described with its expected input and output, making it easier for developers to
 understand and integrate the API.
+
+
+
