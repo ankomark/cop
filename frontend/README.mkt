@@ -1,0 +1,172 @@
+yaml
+Copy code
+openapi: 3.0.0
+info:
+ title: Herbal Remedy API
+ description: |
+ This is a simple API for the Herbal Remedy Web App, which helps users search for natural
+remedies, add them to a favorites list, rate and review remedies, and add new remedies. The API
+supports common operations like retrieving remedies, adding new ones, and managing reviews and
+ratings.
+ version: 1.0.0
+servers:
+ - url: http://localhost:5000
+ description: Local Development Server
+paths:
+ /remedies:
+ get:
+ summary: Retrieve all remedies or search by query
+ description: Get a list of all available herbal remedies or search for remedies based on a
+specific query.
+ parameters:
+ - name: search
+ in: query
+ description: Search term for remedies (e.g., ailment or remedy name)
+ required: false
+ schema:
+ type: string
+ responses:
+ 200:
+ description: A list of remedies
+ content:
+ application/json:
+ schema:
+ type: array
+ items:
+ $ref: '#/components/schemas/Remedy'
+ post:
+ summary: Add a new remedy
+ description: Add a new herbal remedy to the platform.
+ requestBody:
+ required: true
+ content:
+ application/json:
+ schema:
+ $ref: '#/components/schemas/NewRemedy'
+ responses:
+ 201:
+ description: Remedy added successfully
+ 400:
+ description: Invalid input, remedy not added
+ /remedies/{id}:
+ get:
+ summary: Get a remedy by ID
+ description: Retrieve detailed information for a specific remedy by its ID.
+ parameters:
+ - name: id
+ in: path
+ required: true
+ description: ID of the remedy to retrieve
+ schema:
+ type: integer
+ responses:
+ 200:
+ description: Remedy details
+ content:
+ application/json:
+ schema:
+ $ref: '#/components/schemas/Remedy'
+ 404:
+ description: Remedy not found
+ /remedies/{id}/reviews:
+ post:
+ summary: Add a review for a remedy
+ description: Rate and review a specific remedy.
+ parameters:
+ - name: id
+ in: path
+ required: true
+ description: ID of the remedy to review
+ schema:
+ type: integer
+ requestBody:
+ required: true
+ content:
+ application/json:
+ schema:
+ $ref: '#/components/schemas/NewReview'
+ responses:
+ 201:
+ description: Review added successfully
+ 400:
+ description: Invalid input, review not added
+ /favourites:
+ get:
+ summary: Retrieve favourite remedies
+ description: Get a list of remedies that the user has added to their favourites list.
+ responses:
+ 200:
+ description: A list of favourite remedies
+ content:
+ application/json:
+ schema:
+ type: array
+ items:
+ $ref: '#/components/schemas/Remedy'
+components:
+ schemas:
+ Remedy:
+ type: object
+ properties:
+ id:
+ type: integer
+ description: Unique identifier for the remedy
+ name:
+
+ description: Name of the herbal remedy
+ description:
+ type: string
+ description: Detailed description of the remedy
+ benefits:
+ type: array
+ description: List of benefits associated with the remedy
+ NewRemedy:
+ type: object
+ required:
+ - name
+ - description
+ - benefits
+ properties:
+ name:
+ type: string
+ description: Name of the herbal remedy
+ description:
+ type: string
+ description: Detailed description of the remedy
+ benefits:
+ type: array
+ items:
+ type: string
+ description: List of benefits associated with the remedy
+ NewReview:
+ required:
+ - rating
+ - review
+ properties:
+ rating:
+ type: integer
+ description: Rating between 1 and 5
+ review:
+ type: string
+ description: Review text for the remedy
+Key Sections:
+ /remedies (GET): Allows users to fetch a list of remedies or search for a specific remedy
+using a query parameter.
+ /remedies (POST): Allows users to add a new remedy by providing details like name,
+description, and benefits.
+ /remedies/{id} (GET): Retrieves details for a specific remedy by its unique ID.
+ /remedies/{id}/reviews (POST): Lets users add a review and rating for a specific
+remedy.
+ /favourites (GET): Returns a list of favorite remedies that the user has saved.
+Components:
+ Remedy: Defines the structure of a remedy object, including id, name, description, and
+benefits.
+ NewRemedy: Defines the required properties when adding a new remedy.
+ NewReview: Defines the structure of the review, requiring a rating and review text.
+How to Use:
+1. Swagger UI:
+ Once you've configured the API, you can access the Swagger UI interface at
+http://localhost:5000/api-docs to interact with and test the endpoints.
+This setup provides clear API documentation for interacting with your Herbal Remedy Web App.
+Each endpoint is described with its expected input and output, making it easier for developers to
+understand and integrate the API.
