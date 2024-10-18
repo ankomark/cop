@@ -182,7 +182,7 @@ function App() {
                 </p>
                 <button onClick={() => editMedicineForm(medicine)}>Edit</button>
                 <button onClick={() => deleteMedicine(medicine.id)}>Delete</button>
-                <button onClick={() => addToCart(medicine.id)}>Add to Cart</button>
+                {/* <button onClick={() => addToCart(medicine.id)}>Add to Cart</button> */}
               </div>
             ))}
           </div>

@@ -23,3 +23,4 @@ const ProductCard = ({ product, onEdit, onDelete, onAddToCart }) => {
 };
 
 export default ProductCard;
+
